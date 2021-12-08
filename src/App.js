@@ -1,22 +1,29 @@
-import './App.css';
 import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import { doc, collection, onSnapshot } from "firebase/firestore";
-import { db } from './firebase' 
+import Home from './routes/home/Home';
+import Sidebar from './navigation/Sidebar';
 
 function App() {
 
-  useEffect(async () => {
-    const unsub = onSnapshot(collection(db, 'test'), (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        console.log(change.doc.data())
-      })
-  });
-  }, [])
-
   return (
-    <div className="App">
-      
+    <div className="main-app-wrapper" style={{
+      display: 'flex',
+      height: '100vh',
+      width: '100vw'
+    }}>
+      <div className="sidebar" style={{
+        height: '100%'
+      }}>
+        <Sidebar />
+      </div>
+      <div className="main-layout" style={{
+        width: '100%',
+      }}>
+        <Routes>
+          <Route exact path={ '/' } element={<Home />} />
+        </Routes>
+      </div>
     </div>
   );
 }
